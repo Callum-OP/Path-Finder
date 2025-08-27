@@ -24,7 +24,16 @@
 
 // Node structure, can be wall or empty
 struct Node {
+    // Node types
     bool wall = false;
+    Node* previousNode = nullptr;
+    // G, H and F cost
+    float g = 0;
+    float h = 0;
+    float f() const { return g + h; }
+    // Position of each node
+    int x = 0;
+    int y = 0;
 };
 
 // Grid structure, made up of nodes
@@ -32,7 +41,14 @@ struct Grid {
     int width, height;
     std::vector<std::vector<Node>> nodes; // nodes[y][x]
 
-    explicit Grid(int w, int h) : width(w), height(h), nodes(h, std::vector<Node>(w)) {}
+    explicit Grid(int w, int h) : width(w), height(h), nodes(h, std::vector<Node>(w)) {
+        for (int y = 0; y < height; ++y) {
+            for (int x = 0; x < width; ++x) {
+                nodes[y][x].x = x;
+                nodes[y][x].y = y;
+            }
+        }
+    }
 
     bool inBounds(int x, int y) const {
         return x >= 0 && x < width && y >= 0 && y < height;
@@ -50,7 +66,10 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Window");
 
     // Create wall
+    grid.nodes[1][2].wall = !grid.nodes[1][2].wall;
+    grid.nodes[2][1].wall = !grid.nodes[2][1].wall;
     grid.nodes[2][2].wall = !grid.nodes[2][2].wall;
+    grid.nodes[2][3].wall = !grid.nodes[2][3].wall;
 
     while (window.isOpen()) {
         sf::Event event;
