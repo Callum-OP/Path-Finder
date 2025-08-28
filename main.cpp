@@ -26,6 +26,7 @@
 struct Node {
     // Node types
     bool wall = false;
+    bool visited = false;
     Node* previousNode = nullptr;
     // G, H and F cost
     float g = 0;
@@ -55,6 +56,22 @@ struct Grid {
     }
 };
 
+// Function to get neighbours of a node (does not include diagonal neighbours)
+std::vector<Node*> getNeighbours(Node* node, Grid& grid) {
+    std::vector<Node*> neighbors;
+    const int dx[] = { -1, 1, 0, 0 };
+    const int dy[] = { 0, 0, -1, 1 };
+
+    for (int i = 0; i < 4; ++i) {
+        int nx = node->x + dx[i];
+        int ny = node->y + dy[i];
+        if (grid.inBounds(nx, ny)) {
+            neighbors.push_back(&grid.nodes[ny][nx]);
+        }
+    }
+    return neighbors;
+}
+
 int main() {
     // Create grid
     const int TILE = 32;
@@ -69,6 +86,13 @@ int main() {
     Node* startNode = &grid.nodes[0][0];
     Node* endNode   = &grid.nodes[15][15];
 
+    // Test neighbours
+    std::vector<Node*> neighbors = getNeighbours(startNode, grid);
+    std::cout << "Neighbors of (" << startNode->x << ", " << startNode->y << "):\n";
+    for (Node* n : neighbors) {
+        std::cout << "  → (" << n->x << ", " << n->y << ")\n";
+    }
+
     // Create wall
     grid.nodes[1][2].wall = !grid.nodes[1][2].wall;
     grid.nodes[2][1].wall = !grid.nodes[2][1].wall;
@@ -76,6 +100,7 @@ int main() {
     grid.nodes[2][3].wall = !grid.nodes[2][3].wall;
 
     while (window.isOpen()) {
+        
         sf::Event event;
         // Ensure window is closed properly
         while (window.pollEvent(event)) {

@@ -4,6 +4,8 @@
         "limits": "cpp",
         "filesystem": "cpp",
         "iostream": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "algorithm": "cpp",
+        "xiosbase": "cpp"
     }
 }
