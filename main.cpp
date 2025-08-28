@@ -88,9 +88,9 @@ int main() {
 
     // Test neighbours
     std::vector<Node*> neighbors = getNeighbours(startNode, grid);
-    std::cout << "Neighbors of (" << startNode->x << ", " << startNode->y << "):\n";
+    std::cout << "Neighbours (" << startNode->x << ", " << startNode->y << "):\n";
     for (Node* n : neighbors) {
-        std::cout << "  → (" << n->x << ", " << n->y << ")\n";
+        std::cout << n->x << ", " << n->y << "\n";
     }
 
     // Create wall
