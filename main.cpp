@@ -65,6 +65,10 @@ int main() {
     // Create window
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Window");
 
+    // Add start and end nodes
+    Node* startNode = &grid.nodes[0][0];
+    Node* endNode   = &grid.nodes[15][15];
+
     // Create wall
     grid.nodes[1][2].wall = !grid.nodes[1][2].wall;
     grid.nodes[2][1].wall = !grid.nodes[2][1].wall;
@@ -88,7 +92,11 @@ int main() {
             for (float x = 0; x < W; ++x) {
                 tileShape.setPosition({x * TILE, y * TILE});
                 // Empty tiles are white, wall tiles are red
-                if (grid.nodes[y][x].wall)
+                if (&grid.nodes[y][x] == startNode)
+                    tileShape.setFillColor(sf::Color::Green);
+                else if (&grid.nodes[y][x] == endNode)
+                    tileShape.setFillColor(sf::Color::Blue);
+                else if (grid.nodes[y][x].wall)
                     tileShape.setFillColor(sf::Color::Red);
                 else
                     tileShape.setFillColor(sf::Color::White);
