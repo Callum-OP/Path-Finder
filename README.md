@@ -2,7 +2,7 @@
 To run it simply open main.exe
 
 To compile it again on Windows, assuming you have mingw64 installed you can compile it in Powershell with: 
-g++ -Wall -Wextra -g3 main.cpp -o main.exe -I"C:/SFML/include" -L"C:/SFML/lib" -lsfml-graphics -lsfml-window -lsfml-system
+g++ main.cpp -o main -lsfml-graphics -lsfml-window -lsfml-system 
 
 # About the code
 A pathfinding algorithm using C++ and SFML.
