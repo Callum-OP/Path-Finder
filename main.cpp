@@ -8,8 +8,7 @@
 // F Cost - G Cost + H Cost
 // The lower the F Cost the better/quicker the path is
 
-// Chose C++ and SFML as I am familiar with the basics of C++ and SFML and displaying objects
-// Chose A Star as it is general purpose and good at finding the quickest path.
+// A Star is general purpose and good at finding the quickest path.
 
 // Plan
 // Set up C++ and SFML project
