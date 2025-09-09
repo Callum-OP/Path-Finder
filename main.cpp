@@ -156,6 +156,17 @@ int main() {
     // Call A Star pathfinding
     std::vector<Node*> path = aStar(startNode, endNode, grid);
 
+    // Create object to move
+    sf::CircleShape traveller(TILE / 2 - 4);
+    traveller.setFillColor(sf::Color::Green);
+    traveller.setOrigin({traveller.getRadius(), traveller.getRadius()});
+
+    // Movement control
+    size_t pathIndex = 0;
+    sf::Vector2f targetPos(path[pathIndex]->x * TILE + TILE / 2, path[pathIndex]->y * TILE + TILE / 2);
+    traveller.setPosition(targetPos);
+    float moveSpeed = 100.0f;
+
     while (window.isOpen()) {
         
         // Process events
@@ -194,6 +205,24 @@ int main() {
                 window.draw(tileShape);
             }
         }
+
+        // Move the object along the path
+        if (pathIndex + 1 < path.size()) {
+            sf::Vector2f currentPos = traveller.getPosition();
+            sf::Vector2f nextPos(path[pathIndex + 1]->x * TILE + TILE / 2, path[pathIndex + 1]->y * TILE + TILE / 2);
+            sf::Vector2f direction = nextPos - currentPos;
+            float distance = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+
+            if (distance > 1.0f) {
+                direction /= distance;
+                traveller.move(direction * moveSpeed * (1.0f / 60.0f));
+            } else {
+                traveller.setPosition(nextPos);
+                pathIndex++;
+            }
+        }
+        // Draw object
+        window.draw(traveller);
 
         // Display screen
         window.display();
