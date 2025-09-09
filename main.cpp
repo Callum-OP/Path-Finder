@@ -134,8 +134,8 @@ int main() {
     const int H = 20;  // Rows
     Grid grid(W, H);
 
-    // Create window
-    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Window");
+    sf::RenderWindow window(sf::VideoMode({800, 600}), "SFML Window");
+    window.setFramerateLimit(60);
 
     // Add start and end nodes
     Node* startNode = &grid.nodes[0][0];
@@ -158,11 +158,16 @@ int main() {
 
     while (window.isOpen()) {
         
-        sf::Event event;
-        // Ensure window is closed properly
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
+        // Process events
+        std::vector<sf::Event> events;
+        while (const std::optional event = window.pollEvent())
+        {
+            sf::Event ev = *event;
+            events.push_back(ev);
+            // Ensure window is closed properly
+            if (event->is<sf::Event::Closed>()) {
                 window.close();
+            }
         }
 
         // Clear screen
