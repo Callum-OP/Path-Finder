@@ -179,6 +179,36 @@ int main() {
             if (event->is<sf::Event::Closed>()) {
                 window.close();
             }
+            if (const auto* mouseButtonPressed = event->getIf<sf::Event::MouseButtonPressed>()) {
+                int mouseX = sf::Mouse::getPosition(window).x;
+                int mouseY =  sf::Mouse::getPosition(window).y;
+                int gridX = mouseX / TILE;
+                int gridY = mouseY / TILE;
+                if ( mouseButtonPressed->button == sf::Mouse::Button::Left) {
+                    // If within the grid
+                    if (grid.inBounds(gridX, gridY)) {
+                        Node& clickedNode = grid.nodes[gridY][gridX];
+                        // Can not change the start and end node
+                        if (&clickedNode != startNode && &clickedNode != endNode) {
+                            // Reverse the role of the tile (if a wall then become empty or if empty then become a wall)
+                            clickedNode.wall = !clickedNode.wall;
+                            // Reset costs
+                            for (auto& row : grid.nodes) {
+                                for (auto& node : row) {
+                                    node.visited = false;
+                                    node.previousNode = nullptr;
+                                    node.g = std::numeric_limits<float>::infinity();
+                                    node.h = 0;
+                                }
+                            }
+                            // Run pathfinding again
+                            path = aStar(startNode, endNode, grid);
+                            pathIndex = 0;
+                            traveller.setPosition({startNode->x * TILE + TILE / 2.f, startNode->y * TILE + TILE / 2.f});
+                        }
+                    }
+                }
+            }
         }
 
         // Clear screen
