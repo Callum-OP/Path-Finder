@@ -1,12 +1,14 @@
+# Demo Video
+
+
+https://github.com/user-attachments/assets/09d8967d-5082-4577-a9d1-edb6ac2b37b4
+
+
 # How to run
 To run it simply open main.exe
 
 To compile it again on Windows, assuming you have MSVC installed you can compile it in Powershell with: 
 cl /EHsc /std:c++17 /I external/SFML-3.0.0/include main.cpp /link /LIBPATH:external/SFML-3.0.0/lib sfml-graphics.lib sfml-window.lib sfml-system.lib 
-
-# Screenshots of the pathfinder
-<img width="801" height="644" alt="image" src="https://github.com/user-attachments/assets/10d35922-f8d3-4ef3-b35a-ae599c1c1251" />
-
 
 # About the code
 A pathfinding algorithm using C++ and SFML.
