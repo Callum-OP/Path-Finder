@@ -15,7 +15,7 @@ int main() {
     window.setFramerateLimit(60);
 
     // Add start and end nodes
-    Node* startNode = &grid.nodes[0][0];
+    Node* startNode = &grid.nodes[2][2];
     //Node* endNode = &grid.nodes[15][15];
     sf::CircleShape player(TILE / 2 - 4);
     player.setFillColor(sf::Color::Green);
@@ -26,11 +26,6 @@ int main() {
     float speed = 5;
 
     // Create wall
-    grid.nodes[1][2].wall = !grid.nodes[1][2].wall;
-    grid.nodes[2][1].wall = !grid.nodes[2][1].wall;
-    grid.nodes[2][2].wall = !grid.nodes[2][2].wall;
-    grid.nodes[2][3].wall = !grid.nodes[2][3].wall;
-    grid.nodes[2][4].wall = !grid.nodes[2][4].wall;
     grid.nodes[2][5].wall = !grid.nodes[2][5].wall;
     grid.nodes[2][6].wall = !grid.nodes[2][6].wall;
     grid.nodes[3][7].wall = !grid.nodes[3][7].wall;
@@ -41,10 +36,10 @@ int main() {
     grid.nodes[12][15].wall = !grid.nodes[12][15].wall;
 
     // Call A Star pathfinding
-    std::vector<Node*> path = aStar(startNode, endNode, grid);
+    std::vector<Node*> path = aStar(startNode, endNode, grid, 2, 2);
 
     // Create object to move
-    sf::CircleShape traveller(TILE / 2 - 4);
+    sf::CircleShape traveller(TILE - 4);
     traveller.setFillColor(sf::Color::Green);
     traveller.setOrigin({traveller.getRadius(), traveller.getRadius()});
 
@@ -129,7 +124,7 @@ int main() {
             }
         }
         // Run pathfinding again
-        path = aStar(startNode, endNode, grid);
+        path = aStar(startNode, endNode, grid, 2, 2);
         pathIndex = 0;
 
         // Move the start node with the traveller

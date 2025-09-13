@@ -70,8 +70,22 @@ std::vector<Node*> getNeighbours(Node* node, Grid& grid) {
     return neighbours;
 }
 
+// Function to see if there is enough space for the object to fit through the path
+bool isSpaceFree(int x, int y, Grid& grid, int objW, int objH) {
+    for (int dy = 0; dy < objH; ++dy) {
+        for (int dx = 0; dx < objW; ++dx) {
+            int nx = x + dx;
+            int ny = y + dy;
+            if (!grid.inBounds(nx, ny) || grid.nodes[ny][nx].wall) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 // The A Star pathfinding algorithm
-std::vector<Node*> aStar(Node* start, Node* goal, Grid& grid) {
+std::vector<Node*> aStar(Node* start, Node* goal, Grid& grid, int objectWidth, int objectHeight) {
     // List of nodes to be checked
     std::vector<Node*> openSet;
     start->g = 0;
@@ -101,7 +115,9 @@ std::vector<Node*> aStar(Node* start, Node* goal, Grid& grid) {
 
         // Check each neighbour
         for (Node* neighbour : getNeighbours(current, grid)) {
-            if (neighbour->wall || neighbour->visited) continue;
+            // Complete checks
+            if (neighbour->x + objectWidth > grid.width || neighbour->y + objectHeight > grid.height) continue;
+            if (!isSpaceFree(neighbour->x, neighbour->y, grid, objectWidth, objectHeight)) continue;
             float tentativeG = current->g + 1; // Distance/cost between neighbouring nodes
             // If the cost is less (if this path to neighbor is better), then record it
             if (tentativeG < neighbour->g) {
