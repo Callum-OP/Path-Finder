@@ -17,6 +17,14 @@ Included SFML files in the project.
 Used A Star Pathfinding, which attempts to find the quickest route from a start node to an end node based on G Cost and H Cost.
 It can be used to assist enemy AI in avoiding obstacles in video games but as it is general purpose there are other uses for it too, such as visualising the quickest path out of an area or route planning.
 
+## Things to add
+If it is not possible to get to the exact end node the pathfinding could still be made to still attempt to get as close as possible.
+Could add a detection radius, so that it only chases when when the start node is within a certain distance.
+Add other options for the pathfinder? Such as patrol or wander randomly.
+
+## Issues
+If traveller is near edges of bounds and too big too fit inside bounds there will be a 0x0000000000000000 error.
+
 # Development process
 Set up C++ and SFML project
 Learn Pathfinding basics, look at other implementations of the algorithm
