@@ -91,6 +91,8 @@ std::vector<Node*> aStar(Node* start, Node* goal, Grid& grid, int objectWidth, i
     start->g = 0;
     start->h = estimatedCost(start, goal);
     openSet.push_back(start);
+    Node* closestToGoal = start;
+    float lowestH = start->h;
 
     while (!openSet.empty()) {
         // Sort list of nodes by lowest F cost
@@ -128,8 +130,24 @@ std::vector<Node*> aStar(Node* start, Node* goal, Grid& grid, int objectWidth, i
                 if (std::find(openSet.begin(), openSet.end(), neighbour) == openSet.end()) {
                     openSet.push_back(neighbour);
                 }
+                // Get neighbour closest to goal, for checking if goal is not possible to reach
+                if (neighbour->h < lowestH) {
+                    lowestH = neighbour->h;
+                    closestToGoal = neighbour;
+                }
             }
         }
+    }
+    // If no path to goal then return path to closest possible node
+    if (closestToGoal != start && closestToGoal->previousNode != nullptr) {
+        std::vector<Node*> path;
+        Node* current = closestToGoal;
+        while (current != nullptr) {
+            path.push_back(current);
+            current = current->previousNode;
+        }
+        std::reverse(path.begin(), path.end());
+        return path;
     }
     return {}; // No path found
 }
