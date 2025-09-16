@@ -5,9 +5,9 @@ https://github.com/user-attachments/assets/09d8967d-5082-4577-a9d1-edb6ac2b37b4
 
 
 # How to run
-To run it simply open main.exe
+To run it simply open main.exe within the build/bin/Debug folder
 
-To compile it again on Windows within vscode, assuming you have MSVC installed you can compile it by pressing the play ▶️ button and selecting Run SFML App or by using Ctrl + Shift + B.
+To compile it again use cmake --build build 
 
 # About the code
 A pathfinding algorithm using C++ and SFML.
