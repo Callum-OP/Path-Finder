@@ -7,8 +7,7 @@ https://github.com/user-attachments/assets/09d8967d-5082-4577-a9d1-edb6ac2b37b4
 # How to run
 To run it simply open main.exe
 
-To compile it again on Windows, assuming you have MSVC installed you can compile it in Powershell with: 
-cl /EHsc /std:c++17 /I external/SFML-3.0.0/include main.cpp /link /LIBPATH:external/SFML-3.0.0/lib sfml-graphics.lib sfml-window.lib sfml-system.lib 
+To compile it again on Windows within vscode, assuming you have MSVC installed you can compile it by pressing the play ▶️ button and selecting Run SFML App or by using Ctrl + Shift + B.
 
 # About the code
 A pathfinding algorithm using C++ and SFML.
@@ -24,6 +23,7 @@ Add other options for the pathfinder? Such as patrol or wander randomly.
 
 ## Issues
 If traveller is near edges of bounds and too big too fit inside bounds there will be a 0x0000000000000000 error.
+When considering the size of the object the pathfinding will successfully find a path wide enough but it would be ideal to change it to ensure they stay in the middle of the path to reduce the chance of clipping with the walls.
 
 # Development process
 Set up C++ and SFML project
